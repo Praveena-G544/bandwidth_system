@@ -1,0 +1,8 @@
+{% extends "base.html" %}{% block body %}<h1>Users</h1>
+<div class="box"><form class="row" method="post">
+<input name="full_name" placeholder="Full name" required><input name="email" type="email" placeholder="Email" required>
+<select name="plan_id">{% for p in plans %}<option value="{{ p.plan_id }}">{{ p.plan_name }} ({{ p.monthly_quota_gb }} GB)</option>{% endfor %}</select>
+<button>Add user</button></form></div>
+<div class="box"><table><tr><th>ID</th><th>Name</th><th>Email</th><th>Plan</th><th>Devices</th><th></th></tr>
+{% for r in rows %}<tr><td>{{ r.user_id }}</td><td>{{ r.full_name }}</td><td>{{ r.email }}</td><td>{{ r.plan_name }}</td><td>{{ r.devices }}</td>
+<td><form method="post" action="{{ url_for('delete_user', i=r.user_id) }}" onsubmit="return confirm('Delete this user and their devices?')"><button class="del">Delete</button></form></td></tr>{% endfor %}</table></div>{% endblock %}

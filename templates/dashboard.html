@@ -1,0 +1,20 @@
+{% extends "base.html" %}{% block body %}
+<h1>This month at a glance</h1>
+<div class="grid">
+<div class="box big">{{ c.users }}<small>Users</small></div>
+<div class="box big">{{ c.devices }}<small>Devices</small></div>
+<div class="box big">{{ c.gb }} GB<small>Used this month</small></div>
+<div class="box big">{{ c.alerts }}<small>Alerts raised</small></div></div>
+<div class="box"><b>Daily usage, last 30 days (GB)</b><canvas id="d" height="90"></canvas></div>
+<div class="box"><b>Usage against quota this month</b>
+<table><tr><th>User</th><th>Used</th><th>Quota</th><th>Progress</th></tr>
+{% for t in top %}<tr><td>{{ t.full_name }}</td><td>{{ t.used_gb }} GB</td><td>{{ t.quota_gb }} GB</td>
+<td><div class="bar"><i class="{{ 'hot' if t.pct>=80 }}" style="width:{{ [t.pct,100]|min }}%"></i></div>{{ t.pct }}%</td></tr>
+{% else %}<tr><td colspan="4">No usage recorded this month. Upload data on the Usage page.</td></tr>{% endfor %}</table></div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<script>
+const d={{ daily|tojson }};
+new Chart(document.getElementById('d'),{type:'line',data:{labels:d.map(x=>x.day),
+datasets:[{data:d.map(x=>x.gb),borderColor:'#0b7a75',backgroundColor:'rgba(11,122,117,.12)',fill:true,tension:.25}]},
+options:{plugins:{legend:{display:false}}}});
+</script>{% endblock %}

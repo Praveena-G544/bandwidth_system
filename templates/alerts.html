@@ -1,0 +1,4 @@
+{% extends "base.html" %}{% block body %}<h1>Quota alerts</h1>
+<div class="box"><table><tr><th>Raised</th><th>User</th><th>Level</th><th>Details</th></tr>
+{% for r in rows %}<tr><td>{{ r.created_at.strftime('%d %b %Y %H:%M') }}</td><td>{{ r.full_name }}</td><td>{{ r.threshold }}%</td><td>{{ r.message }}</td></tr>
+{% else %}<tr><td colspan="4">No alerts yet. They appear when a user passes 80%, 90% or 100% of quota.</td></tr>{% endfor %}</table></div>{% endblock %}

@@ -1,0 +1,6 @@
+{% extends "base.html" %}{% block body %}<h1>Usage records</h1>
+<div class="box"><form class="row" method="post" enctype="multipart/form-data">
+<input type="file" name="file" accept=".csv" required><button>Import CSV</button></form>
+<p style="font:13px system-ui">Columns: mac_address, usage_date, download_mb, upload_mb. One bad row cancels the whole file.</p></div>
+<div class="box"><table><tr><th>Date</th><th>User</th><th>Device</th><th>Download MB</th><th>Upload MB</th></tr>
+{% for r in rows %}<tr><td>{{ r.usage_date }}</td><td>{{ r.full_name }}</td><td>{{ r.device_name }}</td><td>{{ r.download_mb }}</td><td>{{ r.upload_mb }}</td></tr>{% endfor %}</table></div>{% endblock %}
